@@ -20,7 +20,7 @@ public class MancalaTester {
 		System.out.println("Winner: " + m.declareWinner());
 	}
 	
-//	public static void main(String[] args) {
-//		System.out.println(Math.max(3, 3));
-//	}
+	public static void main1(String[] args) {
+		System.out.println(Math.max(3, 3));
+	}
 }
