@@ -48,7 +48,7 @@ public class DraftModel {
 		System.out.println("\n");
 	}
 
-	public void attach(ChangeListener c) {
+	public void addChangeListener(ChangeListener c) {
 		listeners.add(c);
 	}
 
@@ -79,7 +79,7 @@ public class DraftModel {
 		}
 	}
 
-	public void rules(int pit){
+	public void makeMove(int pit){
 		freeTurn = false;
 		moveStones(pit);
 		
@@ -113,15 +113,7 @@ public class DraftModel {
 	}
 
 	
-//	public void capture1(int oppositePit){
-//		if(getGameState() == GAME_STATE_PLAYER_A)
-//			board.put(mancala_A_Key, board.get(mancala_A_Key) + board.get(oppositePit));
-//		else
-//			board.put(mancala_B_Key, board.get(mancala_B_Key) + board.get(oppositePit));
-//		
-//		board.put(oppositePit, 0);
-//	}
-	
+
 	public void capture(int mancalaKey, int oppositePit){
 		board.put(mancalaKey, board.get(mancalaKey) + board.get(oppositePit));
 		board.put(oppositePit, 0);
@@ -147,16 +139,12 @@ public class DraftModel {
 	}
 
 	   /**
-	      Change the data in the model at a particular location
+	      Change the data in the model 
 	      @param pitIndex key of the map
-	      @param stones the new stones
+
 	   */	
-	public void updatePits(int pitIndex, int stones){
-		board.put(pitIndex, stones);
-//		setPitIndex(pitIndex);
-//		if(isValidPit(pitIndex)){
-//			rules(pitIndex);
-//		}
+	public void updatePits(int pitIndex){
+		makeMove(pitIndex);
 		 for (ChangeListener l : listeners)
 	      {
 	         l.stateChanged(new ChangeEvent(this));
@@ -169,13 +157,14 @@ public class DraftModel {
 	}
 
 	public boolean isValidPit(int pit) {
+		if(board.get(pit) == 0)
+			return false;
 		if (getGameState() == GAME_STATE_PLAYER_A && (pit >= 0 && pit < 6))
 			return true;
 		if (getGameState() == GAME_STATE_PLAYER_B && (pit >= 7 && pit < 13))
 			return true;
 		
-		if(board.get(pit) == 0)
-			return false;
+		
 		return false;
 	}
 

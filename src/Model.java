@@ -17,8 +17,7 @@ public class Model {
 	private int mancala_B_Key = 13;
 	int lastStonePit = 0;
 	int pit = 0;
-	// int stones = 0;
-
+	boolean freeTurn = false;
 	Model(int stones) {
 		board = new HashMap<>();
 		listeners = new ArrayList<>();
@@ -67,33 +66,45 @@ public class Model {
 	}
 
 	public void makeMove(int pit){
-
+		freeTurn = false;
 		moveStones(pit);
-		boolean freeTurn = false;
 		
 		//number of stones in last pit before stones were moved. Once stones are moved, empty pit will have 1 stone.
-		int lastPitStones = board.get(lastStonePit);
-		if(lastStonePit == mancala_A_Key || lastStonePit == mancala_B_Key){
-			freeTurn = true;
+		int lastPit_Stones = board.get(lastStonePit);
+//		if(lastStonePit == mancala_A_Key || lastStonePit == mancala_B_Key){
+//			freeTurn = true;
+//		}
+		
+		if(getGameState() == GAME_STATE_PLAYER_A && (lastStonePit >= 0 && lastStonePit <= 6)){
+			applyRules(mancala_A_Key, lastPit_Stones);
 		}
-		else if(lastPitStones - 1 == 0){
-			//capture from opposite pit
-			capture(12 - lastStonePit);
+		else if(getGameState() == GAME_STATE_PLAYER_B && (lastStonePit >= 7 && lastStonePit <=13)){
+			applyRules(mancala_B_Key, lastPit_Stones);
 		}
-
+					
+		
 		if(!freeTurn)
-			changeGameState();			
+			changeGameState();	
 	}
 	
-	
-	public void capture(int oppositePit){
-		if(getGameState() == GAME_STATE_PLAYER_A)
-			board.put(mancala_A_Key, board.get(mancala_A_Key) + board.get(oppositePit));
-		else
-			board.put(mancala_B_Key, board.get(mancala_B_Key) + board.get(oppositePit));
+	public void applyRules(int mancalaKey, int lastPit_Stones){
 		
+		if(lastStonePit == mancalaKey)
+			freeTurn = true;
+		else if(lastPit_Stones - 1 == 0){
+		//capture from opposite pit
+		capture(mancalaKey, 12 - lastStonePit);
+		}
+	
+	}
+
+	
+
+	public void capture(int mancalaKey, int oppositePit){
+		board.put(mancalaKey, board.get(mancalaKey) + board.get(oppositePit));
 		board.put(oppositePit, 0);
 	}
+	
 	
 	public void moveStones(int pit) {
 		int stones = board.get(pit);
@@ -120,7 +131,7 @@ public class Model {
 	      @param stones the new stones
 	   */	
 	
-	public void update(int pitIndex){
+	public void updatePits(int pitIndex){
 		
 		makeMove(pitIndex);
 //		board.put(pitIndex, stones);
@@ -144,6 +155,9 @@ public class Model {
 			return true;
 		if (getGameState() == GAME_STATE_PLAYER_B && (pit >= 7 && pit < 13))
 			return true;
+		
+		if(board.get(pit) == 0)
+			return false;
 		return false;
 	}
 
