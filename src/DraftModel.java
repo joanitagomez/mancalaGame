@@ -4,7 +4,7 @@ import java.util.HashMap;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class Model {
+public class DraftModel {
 
 	HashMap<Integer, Integer> board;
 	ArrayList<ChangeListener> listeners;
@@ -18,11 +18,12 @@ public class Model {
 	int lastStonePit = 0;
 	int pit = 0;
 	// int stones = 0;
-
-	Model(int stones) {
+	boolean freeTurn = false;
+	DraftModel(int stones) {
 		board = new HashMap<>();
 		listeners = new ArrayList<>();
-		// setting up the board for testing purposes
+		// setting up the board
+
 		for (int i = 0; i < 13; i++)
 			board.put(i, stones);
 		board.put(6, 0); // A's mancala
@@ -32,10 +33,22 @@ public class Model {
 
 	@SuppressWarnings("unchecked")
 	public HashMap<Integer, Integer> getBoard() {
-		return (HashMap<Integer, Integer>) board;
+		return (HashMap<Integer, Integer>) board.clone();
+	}
+	
+	public void printBoard() {
+
+		for (int i = 12; i >= board.size() / 2; i--) {
+			System.out.printf("\t%s \t", board.get(i));
+		}
+		System.out.println("\n" + board.get(13));
+		for (int i = 0; i < board.size() / 2; i++) {
+			System.out.printf("\t%s \t", board.get(i));
+		}
+		System.out.println("\n");
 	}
 
-	public void addChangeListener(ChangeListener c) {
+	public void attach(ChangeListener c) {
 		listeners.add(c);
 	}
 
@@ -66,32 +79,51 @@ public class Model {
 		}
 	}
 
-	public void makeMove(int pit){
-
+	public void rules(int pit){
+		freeTurn = false;
 		moveStones(pit);
-		boolean freeTurn = false;
 		
 		//number of stones in last pit before stones were moved. Once stones are moved, empty pit will have 1 stone.
-		int lastPitStones = board.get(lastStonePit);
-		if(lastStonePit == mancala_A_Key || lastStonePit == mancala_B_Key){
-			freeTurn = true;
+		int lastPit_Stones = board.get(lastStonePit);
+//		if(lastStonePit == mancala_A_Key || lastStonePit == mancala_B_Key){
+//			freeTurn = true;
+//		}
+		
+		if(getGameState() == GAME_STATE_PLAYER_A && (lastStonePit >= 0 && lastStonePit <= 6)){
+			applyRules(mancala_A_Key, lastPit_Stones);
 		}
-		else if(lastPitStones - 1 == 0){
-			//capture from opposite pit
-			capture(12 - lastStonePit);
+		else if(getGameState() == GAME_STATE_PLAYER_B && (lastStonePit >= 7 && lastStonePit <=13)){
+			applyRules(mancala_B_Key, lastPit_Stones);
 		}
-
+					
+		
 		if(!freeTurn)
-			changeGameState();			
+			changeGameState();	
 	}
 	
-	
-	public void capture(int oppositePit){
-		if(getGameState() == GAME_STATE_PLAYER_A)
-			board.put(mancala_A_Key, board.get(mancala_A_Key) + board.get(oppositePit));
-		else
-			board.put(mancala_B_Key, board.get(mancala_B_Key) + board.get(oppositePit));
+	public void applyRules(int mancalaKey, int lastPit_Stones){
 		
+		if(lastStonePit == mancalaKey)
+			freeTurn = true;
+		else if(lastPit_Stones - 1 == 0){
+		//capture from opposite pit
+		capture(mancalaKey, 12 - lastStonePit);
+		}
+	
+	}
+
+	
+//	public void capture1(int oppositePit){
+//		if(getGameState() == GAME_STATE_PLAYER_A)
+//			board.put(mancala_A_Key, board.get(mancala_A_Key) + board.get(oppositePit));
+//		else
+//			board.put(mancala_B_Key, board.get(mancala_B_Key) + board.get(oppositePit));
+//		
+//		board.put(oppositePit, 0);
+//	}
+	
+	public void capture(int mancalaKey, int oppositePit){
+		board.put(mancalaKey, board.get(mancalaKey) + board.get(oppositePit));
 		board.put(oppositePit, 0);
 	}
 	
@@ -119,11 +151,8 @@ public class Model {
 	      @param pitIndex key of the map
 	      @param stones the new stones
 	   */	
-	
-	public void update(int pitIndex){
-		
-		makeMove(pitIndex);
-//		board.put(pitIndex, stones);
+	public void updatePits(int pitIndex, int stones){
+		board.put(pitIndex, stones);
 //		setPitIndex(pitIndex);
 //		if(isValidPit(pitIndex)){
 //			rules(pitIndex);
@@ -144,6 +173,9 @@ public class Model {
 			return true;
 		if (getGameState() == GAME_STATE_PLAYER_B && (pit >= 7 && pit < 13))
 			return true;
+		
+		if(board.get(pit) == 0)
+			return false;
 		return false;
 	}
 
