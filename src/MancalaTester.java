@@ -1,25 +1,26 @@
+import java.awt.Container;
 import java.util.Scanner;
 
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MancalaTester {
 
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		Scanner s = new Scanner(System.in);
-		DraftModel model = new DraftModel(3);
-		GameView view = new GameView(model);
+		Model model = new Model(3);
+		// GameView view = new GameView(model);
+		// model.addChangeListener(view);
 
-		model.addChangeListener(view);
-
+		BoardFrame view = new BoardFrame(model);
 		while (!model.isGameOver()) {
-
 			System.out.println(model.getGameState() + "'s turn.");
 			System.out.println("Select pit");
 			int pit = s.nextInt();
 
 			// int pit = view.getSelectedPit();
-			if(model.isValidPit(pit))
+			if (model.isValidPit(pit))
 				model.updatePits(pit);
 			else
 				System.out.println("Choose valid pit.");
@@ -28,40 +29,27 @@ public class MancalaTester {
 		System.out.println("Winner: " + model.declareWinner());
 	}
 
-	public static void main11(String[] args) {
-		Scanner s = new Scanner(System.in);
-		//
-		DraftModel model = new DraftModel(3);
-		// GameView view = new GameView(model);
-		//
-		// model.addChangeListener(view);
-		//
-		// while (!model.isGameOver()) {
-		// int pit = view.getSelectedPit();
-		// model.update(pit);
-		// }
-		// }
+	
+	
+	public static void main(String[] args) {		
 
-		while (!model.isGameOver()) {
-			System.out.println(model.getGameState() + "'s turn.");
-			System.out.println("Select pit");
-			int pit = s.nextInt();
-
-			if (model.isValidPit(pit)) {
-				model.makeMove(pit);
-				model.printBoard();
-				System.out.println("Last stone dropped in pit #" + model.lastStonePit);
-			} else
-				System.out.println(model.getGameState() + "'s turn. Choose valid pit");
+		
+		String strStones = JOptionPane.showInputDialog("How many stones do you want to play with?");
+		int stones  = Integer.parseInt(strStones);
+		
+		Model model = new Model(stones);
+		BoardFrame view = new BoardFrame(model);
+		
+		while (!model.isGameOver()) {			
+			int pit = view.getPit();
+			if(pit == -1)
+				continue;
+			if(model.isValidPit(pit))
+				model.updatePits(pit);
+	
 		}
 		System.out.println("*Game Over*");
 		System.out.println("Winner: " + model.declareWinner());
-	}
-
-	public static void main1(String[] args) {
-		Model m = new Model(9);
-		JFrame frame = new BoardFrameView(m);
-
 	}
 
 }

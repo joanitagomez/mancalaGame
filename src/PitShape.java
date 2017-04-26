@@ -44,7 +44,7 @@ public class PitShape {
 		double x0 = this.x;
 		double y0 = this.y;
 		return mousePoint.getX() >= x0 && mousePoint.getY() >= y0 && mousePoint.getX() < x0 + diameter
-				&& mousePoint.getY() < y0 + diameter;
+				&& mousePoint.getY() < y0 + height;
 	}
 
 }
