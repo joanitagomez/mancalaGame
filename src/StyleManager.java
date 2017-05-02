@@ -1,12 +1,11 @@
 import java.awt.Color;
 
+/** 
+ * @author Ada
+ *  StyleManager interface sets up the requirements for GUI style 
+ *  of the mancala board
+ */
 public interface StyleManager {
-
-	/**
-	 * getBackGroundColor method returns the background color of the mancala
-	 */
-	public Color getBackGroundColor();
-
 	/**
 	 * getInsidePitColor method return the color of this inside pit
 	 */
@@ -17,10 +16,6 @@ public interface StyleManager {
 	 */
 	public Color getInsidePitColor();
 
-	/**
-	 * getFontColor method returns the color of the stones font
-	 */
-	public Color getFontColor();
 
 	/**
 	 * getBeadFill method returns the color of the beads

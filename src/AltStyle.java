@@ -1,22 +1,13 @@
 
 import java.awt.Color;
-
 /**
- * @author Team Name: Team members: MancalaStrategyAlt class set up the
- *         alternative GUI style of the mancala board
+ * @author Ada
+ * AltStyle class set up the
+ * alternative GUI style of the mancala board
  */
 public class AltStyle implements StyleManager {
 
-	/**
-	 * getBackGroundColor method returns the background color of the mancala
-	 * 
-	 * @return Color red
-	 */
-	public Color getBackGroundColor() {
-		return Color.RED;
-
-	}
-
+	
 	/**
 	 * getInsidePitColor method return the color of this inside pit @ return
 	 * Color white
@@ -32,16 +23,6 @@ public class AltStyle implements StyleManager {
 	 */
 	public Color getOutsidePitColor() {
 		return Color.BLUE;
-	}
-
-	/**
-	 * getFontColor method returns the color of the stones font
-	 * 
-	 * @return Color black
-	 */
-	public Color getFontColor() {
-		// TODO Auto-generated method stub
-		return Color.BLACK;
 	}
 
 	/**

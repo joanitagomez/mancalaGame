@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * @author Joanitha Christle Gomez 
+ * Model class holds all the data and logic for the mancala game
+ */
 public class Model {
 
 	HashMap<Integer, Integer> board;
@@ -25,6 +28,9 @@ public class Model {
 	int maxUndoB = 3;
 	HashMap<Integer, Integer> prevBoard;
 
+	/**
+	 * Model constructor initializes the data in the game
+	 */
 	Model(int stones) {
 		board = new HashMap<>();
 		listeners = new ArrayList<>();
@@ -35,34 +41,58 @@ public class Model {
 		board.put(13, 0); // b's mancala
 	}
 
+	/**
+	 * getBoard returns the Hashmap of the board 
+	 * @return Hashmap of data values of the pits
+	 */
 	public HashMap<Integer, Integer> getBoard() {
 		return (HashMap<Integer, Integer>) board;
 	}
 
-	 @SuppressWarnings("unchecked")
+	/**
+	 * setPrevBoard sets previous board
+	 */
+	@SuppressWarnings("unchecked")
 	public void setPrevBoard() {
-	  prevBoard = (HashMap<Integer, Integer>) getBoard().clone();
-	 }
+		prevBoard = (HashMap<Integer, Integer>) getBoard().clone();
+	}
 
+	/**
+	 * getPrevBoard returns the state of previous board
+	 * @return Hashmap of data values of the pits
+	 */
 	public HashMap<Integer, Integer> getPrevBoard() {
 		return prevBoard;
 	}
 
+	/**
+	 * addChangeListener method attaches the changelisteners
+	 * @param cl  ChangeListeners
+	 */
 	public void addChangeListener(ChangeListener c) {
 		listeners.add(c);
 	}
 
 	/**
-	 * @return current game state
+	 * getGameState method returns current game state
 	 */
 	public int getGameState() {
 		return this.gameState;
 	}
 
+	/**
+	 * setGameState method sets the state of game
+	 * 
+	 * @param gameState:
+	 *            state to be set
+	 */
 	public void setGameState(int gameState) {
 		this.gameState = gameState;
 	}
 
+	/**
+	 * changeGameState method alternates turns
+	 */
 	public void changeGameState() {
 		switch (this.gameState) {
 		case GAME_STATE_PLAYER_A:
@@ -78,31 +108,38 @@ public class Model {
 		}
 	}
 
+	/**
+	 * undo method goes back to the previous move
+	 */
 	public void undo() {
-		this.board = prevBoard;	
-		if(freeTurn)
+		this.board = prevBoard;
+		if (freeTurn)
 			changeGameState();
-		
-			changeGameState();
-			if(getGameState() == GAME_STATE_PLAYER_A){
-				undoA = true;
-				this.maxUndoA--;
-			}
-			else{
-				undoB = true;
-				this.maxUndoB--;
-			}
 
-			for (ChangeListener l : listeners) {
+		changeGameState();
+		if (getGameState() == GAME_STATE_PLAYER_A) {
+			undoA = true;
+			this.maxUndoA--;
+		} else {
+			undoB = true;
+			this.maxUndoB--;
+		}
+
+		for (ChangeListener l : listeners) {
 			l.stateChanged(new ChangeEvent(this));
 		}
 	}
 
+	/**
+	 * makeMove is the main method for mancala game
+	 * @param pit- pit player chooses
+	 */
 	@SuppressWarnings("unchecked")
 	public void makeMove(int pit) {
 		setPrevBoard();
 		freeTurn = false;
-		undoA = false; undoB = false;
+		undoA = false;
+		undoB = false;
 		moveStones(pit);
 
 		// number of stones in last pit before stones were moved. Once stones
@@ -117,9 +154,14 @@ public class Model {
 
 		if (!freeTurn)
 			changeGameState();
-	
+
 	}
 
+	/**
+	 * applyRules method decides if there is a free turn or capture to be
+	 * performed
+	 * @param pit
+	 */
 	public void applyRules(int mancalaKey, int lastPit_Stones) {
 		if (lastStonePit == mancalaKey)
 			freeTurn = true;
@@ -129,11 +171,25 @@ public class Model {
 		}
 	}
 
+	/**
+	 * capture method captures stones from given pit to player's mancala
+	 * 
+	 * @param capturePit
+	 *            : pit from which stones need to be captured
+	 * @param mancalaKey:
+	 *            mancala where the captured stones should go
+	 */
 	public void capture(int mancalaKey, int capturePit) {
 		board.put(mancalaKey, board.get(mancalaKey) + board.get(capturePit));
 		board.put(capturePit, 0);
 	}
 
+	/**
+	 * moveStones method implements distribution of stones
+	 * 
+	 * @param pit:
+	 *            chosen pit
+	 */
 	public void moveStones(int pit) {
 		int stones = board.get(pit);
 		board.put(pit, 0);
@@ -154,8 +210,11 @@ public class Model {
 	}
 
 	/**
-	 * Change the data in the model
-	 * @param pitIndex key of the map
+	 * updatePits method changes the data in model when player intends to move
+	 * stones
+	 * 
+	 * @param pitIndex:
+	 *            int value of pit position
 	 */
 
 	public void updatePits(int pitIndex) {
@@ -164,6 +223,13 @@ public class Model {
 			l.stateChanged(new ChangeEvent(this));
 		}
 	}
+
+	/**
+	 * isValidPit method checks if the chosen pit is valid
+	 * 
+	 * @param pit
+	 *            : chosen pit
+	 */
 
 	public boolean isValidPit(int pit) {
 		if (getGameState() == GAME_STATE_PLAYER_A && (pit >= 0 && pit < 6))
@@ -177,6 +243,9 @@ public class Model {
 		return false;
 	}
 
+	/**
+	 * declareWinner method returns winner of the game
+	 */
 	public int declareWinner() {
 		int stonesMancalaA = board.get(mancala_A_Key);
 		int stonesMancalaB = board.get(mancala_B_Key);
@@ -188,11 +257,21 @@ public class Model {
 			return GAME_STATE_PLAYER_B;
 	}
 
+	/**
+	 * gameOver method is a helper method that captures remaining stones when
+	 * game is over
+	 * 
+	 * @param mancalaKey
+	 * @param pit
+	 */
 	public void gameOver(int mancalaKey, int pit) {
 		for (int i = pit; i < pit + 6; i++)
 			capture(mancalaKey, pit);
 	}
 
+	/**
+	 * isGameOver method checks if the game is over
+	 */
 	public boolean isGameOver() {
 		boolean playerAflag = true;
 		boolean playerBflag = true;
@@ -216,10 +295,20 @@ public class Model {
 		return playerAflag || playerBflag;
 	}
 
+	/**
+	 * getUndoA returns playerA's total number of undos
+	 * 
+	 * @return int value of undo
+	 */
 	public int getUndoA() {
 		return maxUndoA;
 	}
-	
+
+	/**
+	 * getUndoB returns playerB's total number of undos
+	 * 
+	 * @return int value of undo
+	 */
 	public int getUndoB() {
 		return maxUndoB;
 	}

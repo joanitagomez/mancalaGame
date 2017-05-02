@@ -18,7 +18,15 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
-public class MancalaView extends JPanel {
+/**
+ * @author Han
+ * MancalaView class has the view for the mancala game
+ */
+public class MancalaView extends JPanel {	
+
+	private static final int PREF_W = 560;
+	private static final int PREF_H = 280;
+
 	private Point mousePoint;
 	Model m;
 	HashMap<Integer, Integer> b;
@@ -62,7 +70,6 @@ public class MancalaView extends JPanel {
 		for (int i = 13; i >= 7; i--) {
 			height = diameter;
 			if (i == 13) {
-				// x = (PREF_W/diameter * 8);
 				y = diameter;
 				height = diameter * 2;
 			} else {
@@ -114,8 +121,6 @@ public class MancalaView extends JPanel {
 		add(label);
 	}
 
-
-
 	public String stringGameState(int t) {
 		if (t == 0)
 			return "A";
@@ -134,14 +139,25 @@ public class MancalaView extends JPanel {
 		listeners.add(a);
 	}
 
+	/**
+	 * returns selected pit
+	 */
 	public int getSelectedPit() {
 		return selectedPit;
 	}
 
+	/**
+	 * sets selected pit
+	 * 
+	 * @param selectedPit
+	 */
 	public void setSelectedPit(int selectedPit) {
 		this.selectedPit = selectedPit;
 	}
 
+	/**
+	 * paintComponent draws pits and stones
+	 */
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -157,12 +173,15 @@ public class MancalaView extends JPanel {
 		}
 	}
 
+	/**
+	 * setStyle sets strategy of GUI
+	 * 
+	 * @param strategy
+	 *            MancalaStrategy
+	 */
 	public void setStyle(StyleManager s) {
 		this.s = s;
 	}
-
-	private static final int PREF_W = 560;
-	private static final int PREF_H = 280;
 
 	@Override
 	public Dimension getPreferredSize() {

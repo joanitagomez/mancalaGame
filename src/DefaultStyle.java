@@ -1,14 +1,10 @@
 import java.awt.Color;
-
+/**
+ * @author Ada
+ * DefaultStyle class set up the
+ * alternative GUI style of the mancala board
+ */
 public class DefaultStyle implements StyleManager {
-
-	   /**
-	    * getBackGroundColor method returns the background color of the mancala
-	    *  @return Color blue
-	    */
-	   public Color getBackGroundColor() {
-	      return Color.BLUE;
-	   }
 
 	   /**
 	    * getInsidePitColor method return the color of this inside pit
@@ -26,16 +22,6 @@ public class DefaultStyle implements StyleManager {
 	   {
 	      return Color.WHITE;
 	   }
-
-	   /**
-	    * getFontColor method returns the color of the stones font
-	    * @return Color red
-	    */
-	   public Color getFontColor() 
-	   {
-	      return Color.RED;
-	   }
-
 
 	   /**
 	    * getBeadFill method returns the color of the beads

@@ -16,15 +16,7 @@ public class GameView implements ChangeListener{
 		this.m = m;
 		this.b = m.getBoard();
 		printBoard();
-//		System.out.println(m.getGameState() + "'s turn.");
-//		System.out.println("Select pit");
-//		int pit = s.nextInt();
-//		if (m.isValidPit(pit)) {
-//			m.makeMove(pit);
-//			printBoard();
-//			System.out.println("Last stone dropped in pit #" + m.lastStonePit);
-//		} else
-//			System.out.println(m.getGameState() + "'s turn. Choose valid pit");
+
 
 	}
 	public int getSelectedPit() {

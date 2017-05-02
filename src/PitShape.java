@@ -1,10 +1,12 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * A pit shape
+ */
 public class PitShape {
 
 	int height;
@@ -20,37 +22,55 @@ public class PitShape {
 		this.y = y;
 		setpitIndex(pitIndex);
 	}
-
+	/**
+	 * index of this pit
+	 */
 	public void setpitIndex(int pitIndex) {
 		this.pitIndex = pitIndex;
 	}
 
+	/**
+	 * draws pit shape
+	 */
 	public int getpitIndex() {
 		return pitIndex;
 	}
 
+	/**
+	 * draw method draws pit shape
+	 * 
+	 * @param g
+	 * @param s
+	 *            : style of pit
+	 */
 	public void draw(Graphics g, StyleManager s) {
 		Graphics2D g2 = (Graphics2D) g;
 		Rectangle2D rect = new Rectangle2D.Double(x, y, diameter, height);
 		g2.draw(rect);
 		g2.setPaint(s.getOutsidePitColor());
 		g2.fill(rect);
-		
+
 		Ellipse2D ell = new Ellipse2D.Double();
 		ell.setFrame(rect);
 		g2.setColor(s.getInsidePitColor());
 		g2.fill(ell);
 		g2.draw(ell);
 		g2.setColor(s.getBeadFill());
-		if(getpitIndex() < 6)
-			g2.drawString("A" + (getpitIndex() + 1), x + diameter/4, y - 10);
-		
-		if(getpitIndex() > 6 && getpitIndex() < 13){
-			g2.drawString("B" + (getpitIndex() - 6), x + diameter/4, height + 20);
+		if (getpitIndex() < 6)
+			g2.drawString("A" + (getpitIndex() + 1), x + diameter / 4, y - 10);
+
+		if (getpitIndex() > 6 && getpitIndex() < 13) {
+			g2.drawString("B" + (getpitIndex() - 6), x + diameter / 4, height + 20);
 		}
-	
+
 	}
 
+	/**
+	 * contains method checks if mouse point is inside the pit
+	 * 
+	 * @param mousePoint
+	 * @return true if it contains
+	 */
 	public boolean contains(Point mousePoint) {
 		double x0 = this.x;
 		double y0 = this.y;
