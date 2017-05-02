@@ -7,12 +7,12 @@ import javax.swing.event.ChangeListener;
 public class GameView implements ChangeListener{
 
 	HashMap<Integer, Integer> b;
-	DraftModel m;
+	Model m;
 	Scanner s = new Scanner(System.in);
 	int selectedPit = 0;
 
 
-	GameView(DraftModel m) {
+	GameView(Model m) {
 		this.m = m;
 		this.b = m.getBoard();
 		printBoard();
