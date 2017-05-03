@@ -44,8 +44,27 @@ public class MancalaView extends JPanel {
 		pits = new ArrayList<PitShape>();
 		b = m.getBoard();
 		turn = m.getGameState();
-
-		this.addMouseListener(new MouseAdapter() {
+		
+		
+		m.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (m.freeTurn)
+					label.setText("Free turn!");
+				else if (m.undoA) {
+					label.setText(m.getUndoA() + " undo(s) left");
+				} else if (m.undoB)
+					label.setText(m.getUndoB() + " undo(s) left");
+				else {
+					turn = m.getGameState();
+					label.setText((stringGameState(turn) + "'s turn"));
+				}
+				b = m.getBoard();
+				repaint();
+			}
+		});
+		
+		
+		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent event) {
 				mousePoint = event.getPoint();
 				for (PitShape p : pits) {
@@ -96,22 +115,6 @@ public class MancalaView extends JPanel {
 
 		label = new JLabel(stringGameState(turn) + "'s turn");
 
-		m.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				if (m.freeTurn)
-					label.setText("Free turn!");
-				else if (m.undoA) {
-					label.setText(m.getUndoA() + " undo(s) left");
-				} else if (m.undoB)
-					label.setText(m.getUndoB() + " undo(s) left");
-				else {
-					turn = m.getGameState();
-					label.setText((stringGameState(turn) + "'s turn"));
-				}
-				b = m.getBoard();
-				repaint();
-			}
-		});
 
 		setLayout(null);
 		setFont(new Font("Courier", Font.BOLD, 12));
@@ -121,6 +124,10 @@ public class MancalaView extends JPanel {
 		add(label);
 	}
 
+	/**
+	 * stringGameState method returns the player in string form
+	 * @param t
+	 */
 	public String stringGameState(int t) {
 		if (t == 0)
 			return "A";

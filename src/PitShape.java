@@ -44,6 +44,7 @@ public class PitShape {
 	 *            : style of pit
 	 */
 	public void draw(Graphics g, StyleManager s) {
+		
 		Graphics2D g2 = (Graphics2D) g;
 		Rectangle2D rect = new Rectangle2D.Double(x, y, diameter, height);
 		g2.draw(rect);

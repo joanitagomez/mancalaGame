@@ -24,22 +24,36 @@ public class MancalaTest {
 		frame.setTitle("Mancala");
 
 		
-		String strStones = JOptionPane.showInputDialog("How many stones do you want to play with?");
-		if (strStones == null)
-			System.exit(0);
-
-		int stones = Integer.parseInt(strStones);
-
-		Object[] strategy = { "Normal", "Alternate" };
+//		String strStones = JOptionPane.showInputDialog("How many stones do you want to play with (3 or 4)? ");
+//		 if(strStones.equals(""))
+//				System.exit(0);
+//		 
+//		int stones = Integer.parseInt(strStones);
+//		if (!strStones.equals("3") && !strStones.equals("4")){
+//			JOptionPane.showMessageDialog(null,"Invalid number. You've been assigned 3 stones.");
+//			stones = 3;
+//		}
+//		
+		
+		Object[] strStones = { "4", "3" };
+		int stones = JOptionPane.showOptionDialog(null, "Pick number of stones", "Stones", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, strStones, strStones[1]);
+		
+		if(stones == 1)
+			stones = 3;
+		else
+			stones = 4;
+		
+		Object[] strategy = { "Alternate", "Normal" };
 		int style = JOptionPane.showOptionDialog(null, "Choose a Style", "Style", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, strategy, strategy[1]);
 		
 		StyleManager sm;
 		
 		if(style == 1)
-			 sm = new AltStyle();
+			 sm = new DefaultStyle ();
 		else
-			sm = new DefaultStyle();
+			sm = new AltStyle();
 
 		final Model model = new Model(stones);
 		final MancalaView view = new MancalaView(model, sm);
@@ -86,6 +100,7 @@ public class MancalaTest {
 		frame.add(view, BorderLayout.NORTH);
 		frame.add(undoButton, BorderLayout.SOUTH);
 		frame.pack();
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
