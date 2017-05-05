@@ -19,7 +19,7 @@ import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
 /**
- * @author Han
+ * @author Team Forward
  * MancalaView class has the view for the mancala game
  */
 public class MancalaView extends JPanel {	
@@ -48,12 +48,13 @@ public class MancalaView extends JPanel {
 		
 		m.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if (m.freeTurn)
-					label.setText("Free turn!");
-				else if (m.undoA) {
+				
+				if (m.undoA) {
 					label.setText(m.getUndoA() + " undo(s) left");
 				} else if (m.undoB)
 					label.setText(m.getUndoB() + " undo(s) left");
+				else if (m.freeTurn)
+					label.setText("Free turn!");
 				else {
 					turn = m.getGameState();
 					label.setText((stringGameState(turn) + "'s turn"));

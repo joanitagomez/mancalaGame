@@ -5,6 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 /**
+ * @author Team Forward
  * A pit shape
  */
 public class PitShape {
@@ -38,10 +39,8 @@ public class PitShape {
 
 	/**
 	 * draw method draws pit shape
-	 * 
 	 * @param g
-	 * @param s
-	 *            : style of pit
+	 * @param s: style of pit
 	 */
 	public void draw(Graphics g, StyleManager s) {
 		
@@ -68,7 +67,6 @@ public class PitShape {
 
 	/**
 	 * contains method checks if mouse point is inside the pit
-	 * 
 	 * @param mousePoint
 	 * @return true if it contains
 	 */

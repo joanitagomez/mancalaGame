@@ -1,6 +1,6 @@
 import java.awt.Color;
 /**
- * @author Ada
+ * @author Team Forward
  * DefaultStyle class set up the
  * alternative GUI style of the mancala board
  */
@@ -11,7 +11,7 @@ public class DefaultStyle implements StyleManager {
 	    * @ return Color blue
 	    */
 	   public Color getInsidePitColor() {
-	      return Color.BLUE;
+	      return Color.white;
 	   }
 
 	   /**
@@ -20,7 +20,7 @@ public class DefaultStyle implements StyleManager {
 	    */
 	   public Color getOutsidePitColor() 
 	   {
-	      return Color.WHITE;
+	      return Color.black;
 	   }
 
 	   /**

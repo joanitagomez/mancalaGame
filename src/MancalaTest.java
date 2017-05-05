@@ -8,7 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 /**
- * @author Ada Team members: Han , Joanitha MancalaTester Runs the main program.
+ * @author Team Forward
+ *  MancalaTester Runs the main program.
  *  Class also acts as the controller.
  */
 public class MancalaTest {
@@ -79,7 +80,10 @@ public class MancalaTest {
 
 				if (model.isGameOver()) {
 					view.label.setHorizontalAlignment(SwingConstants.LEFT);
-					view.label.setText("Game Over. Player " + view.stringGameState(model.declareWinner()) + " wins!");
+					if(model.declareWinner() == -1)
+						view.label.setText("Game Over. Tie Game!");
+					else
+						view.label.setText("Game Over. Player " + view.stringGameState(model.declareWinner()) + " wins!");
 				}
 			}
 		});

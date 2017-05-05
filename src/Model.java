@@ -2,11 +2,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * @author Joanitha Christle Gomez 
+ * @author Team Forward
  * Model class holds all the data and logic for the mancala game
  */
 public class Model {
@@ -168,6 +169,7 @@ public class Model {
 		else if (lastPit_Stones - 1 == 0) {
 			// capture from opposite pit
 			capture(mancalaKey, 12 - lastStonePit);
+			JOptionPane.showMessageDialog(null, "Captured!");
 		}
 	}
 

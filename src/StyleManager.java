@@ -1,7 +1,7 @@
 import java.awt.Color;
 
 /** 
- * @author Ada
+ * @author Team Forward
  *  StyleManager interface sets up the requirements for GUI style 
  *  of the mancala board
  */

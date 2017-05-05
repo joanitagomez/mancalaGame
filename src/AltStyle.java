@@ -1,7 +1,7 @@
 
 import java.awt.Color;
 /**
- * @author Ada
+ * @author Team Forward
  * AltStyle class set up the
  * alternative GUI style of the mancala board
  */
