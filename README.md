@@ -2,9 +2,9 @@
 
 A 2 player turn-based board game implemented in Java.
 
-##Used
+## Used
 * Java Swing
 * MVC pattern
 
-##Author
+## Author
 Joanitha Christle Gomez
