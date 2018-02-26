@@ -12,4 +12,5 @@ Joanitha Christle Gomez
 ## Course
 
 CS 151: Object-oriented Design
+
 San José State University
