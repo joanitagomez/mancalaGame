@@ -8,3 +8,8 @@ A 2 player turn-based board game implemented in Java. The objective is to captur
 
 ## Author
 Joanitha Christle Gomez
+
+## Course
+
+CS 151: Object-oriented Design
+San José State University
